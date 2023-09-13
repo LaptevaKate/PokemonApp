@@ -23,9 +23,13 @@ final class NetworkService: NetworkServiceProtocol {
                     let result = expecting is Data.Type
                     ? data as! T
                     : try JSONDecoder().decode(expecting, from: data)
-                    completion(.success(result))
+                    DispatchQueue.main.async {
+                        completion(.success(result))
+                    }
                 } catch {
-                    completion(.failure(error))
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
                 }
             }
         }.resume()
