@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class PokemonDetailViewController: UIViewController {
+class PokemonDetailViewController: UIViewController {
     
     // MARK: - @IBOutlets
     @IBOutlet weak var namePokemonLabel: UILabel!
@@ -16,8 +16,15 @@ final class PokemonDetailViewController: UIViewController {
     @IBOutlet weak var pokemonHeightLabel: UILabel!
     @IBOutlet weak var pokemonWeightLabel: UILabel!
     
-   
+ 
+    
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
     
     
 }
+
 
