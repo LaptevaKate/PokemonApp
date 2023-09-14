@@ -13,8 +13,10 @@ protocol PokemonListRouterProtocol: AnyObject {
 
 final class PokemonListRouter: PokemonListRouterProtocol {
     
+    // MARK: - Properties
     weak var presenter: PokemonListPresenterProtocol?
     
+    // MARK: - Methods
     static func build() -> UIViewController {
         
         let interactor = PokemonListInteractor(networkService: NetworkService())
@@ -29,9 +31,11 @@ final class PokemonListRouter: PokemonListRouterProtocol {
         return viewController
         
     }
-  
     
     func moveToDetailsVC() {
-        //
+        
+    let viewController = UINavigationController()
+        
+        
     }
 }

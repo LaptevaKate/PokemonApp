@@ -7,23 +7,63 @@
 
 import UIKit
 
-class PokemonDetailViewController: UIViewController {
+protocol PokemonDetailViewProtocol: AnyObject {
+    
+    var presenter: PokemonDetailPresenterProtocol? { get set }
+    
+    func setUpPokemonInfo(with pokemon: PokemonDetail, data: Data, names: [String])
+}
 
+
+final class PokemonDetailViewController: UIViewController, PokemonDetailViewProtocol {
+    
+    // MARK: - Properties
+    var presenter: PokemonDetailPresenterProtocol?
+    private var pokemonDetail: [PokemonDetail]?
+    
+    private let pokemonNameLabel = UILabel()
+    private let pokemonImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
+    private let pokemonTypeLabel = UILabel()
+    private let pokemonWeightLabel = UILabel()
+    private let pokemonHeightLabel = UILabel()
+    
+    private var stackView = UIStackView()
+    
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupUI()
+        presenter?.pokemonViewDidLoaded()
 
-        // Do any additional setup after loading the view.
+    }
+ 
+    // MARK: - Methods
+    
+    func setUpPokemonInfo(with pokemon: PokemonDetail, data: Data, names: [String]) {
+        
+        DispatchQueue.main.async {
+            self.pokemonImageView.image = UIImage(data: data)
+            self.pokemonNameLabel.text = "Types: " + names.joined(separator: ", ")
+            self.pokemonTypeLabel.text = "Height: \(pokemon.height * 10) cm"
+            self.pokemonWeightLabel.text = "Weight: \(pokemon.weight / 10) kg"
+            self.pokemonHeightLabel.text = pokemon.name.capitalized
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func setupUI() {
+        
+        stackView = UIStackView(arrangedSubviews: [pokemonNameLabel, pokemonImageView, pokemonTypeLabel,pokemonWeightLabel, pokemonHeightLabel])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .center
+        stackView.spacing = UIStackView.spacingUseSystem
+        view.addSubview(stackView)
     }
-    */
-
 }

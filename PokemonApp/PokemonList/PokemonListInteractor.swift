@@ -25,6 +25,7 @@ protocol PokemonListInteractorProtocolOutput: AnyObject {
 
 final class PokemonListInteractor: PokemonListInteractorProtocolInput {
     
+    // MARK: - Properties
     weak var output: PokemonListInteractorProtocolOutput?
     
     var nextPokemonsUrl: String?
@@ -36,7 +37,7 @@ final class PokemonListInteractor: PokemonListInteractorProtocolInput {
         self.networkService = networkService
     }
     
-    
+    // MARK: - Methods
     func fetchPokemons() {
         networkService.getData(urlStr: baseUrl, expecting: Response.self) { [weak self] result in
             switch result {

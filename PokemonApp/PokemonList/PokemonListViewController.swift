@@ -8,12 +8,15 @@
 import UIKit
 
 protocol PokemonListViewProtocol: AnyObject {
+    
     var presenter: PokemonListPresenterProtocol? { get set }
+    
     func configTableView(with data: [Pokemon])
 }
 
 final class PokemonListViewController: UIViewController,  PokemonListViewProtocol {
     
+    // MARK: - Properties
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.delegate = self
@@ -23,20 +26,23 @@ final class PokemonListViewController: UIViewController,  PokemonListViewProtoco
     
     var presenter: PokemonListPresenterProtocol?
     private var pokemons: [Pokemon]?
-    
+ 
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
         presenter?.viewDidLoaded()
     }
-
+    
+    // MARK: - Methods
     func configTableView(with data: [Pokemon]) {
         pokemons = data
         tableView.reloadData()
     }
+    
 }
 
-// MARK: - UI
+// MARK: - extension -  UI
 private extension PokemonListViewController {
     func setupUI() {
         view.addSubview(tableView)
@@ -44,7 +50,7 @@ private extension PokemonListViewController {
     }
 }
 
-// MARK: - UITableViewDataSource
+// MARK: - extension - UITableViewDataSource
 extension PokemonListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return pokemons?.count ?? 0
@@ -59,7 +65,16 @@ extension PokemonListViewController: UITableViewDataSource {
     }
 }
 
-// MARK: - UITableViewDelegate
+// MARK: - extension - UITableViewDelegate
 extension PokemonListViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        guard let pokemons else { return }
+        let pokemon = pokemons[indexPath.row]
+        
+//        let viewController = UINavigationBar
+        
+    }
 }

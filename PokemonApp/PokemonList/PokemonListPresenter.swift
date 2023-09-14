@@ -8,12 +8,12 @@
 import UIKit
 
 protocol PokemonListPresenterProtocol: AnyObject {
-    
     func viewDidLoaded()
 }
 
 final class PokemonListPresenter: PokemonListPresenterProtocol {
     
+    // MARK: - Properties
     weak var view: PokemonListViewProtocol?
     var router: PokemonListRouterProtocol
     var interactor: PokemonListInteractorProtocolInput
@@ -23,12 +23,13 @@ final class PokemonListPresenter: PokemonListPresenterProtocol {
         self.router = router
     }
     
-    
+    // MARK: - Methods
     func viewDidLoaded() {
         interactor.fetchPokemons()
     }
 }
 
+// MARK: - extension
 extension PokemonListPresenter: PokemonListInteractorProtocolOutput{
     func pokemonsDidFetched(_ data: [Pokemon]) {
         view?.configTableView(with: data)
