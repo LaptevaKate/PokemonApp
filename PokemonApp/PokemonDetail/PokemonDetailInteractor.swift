@@ -10,19 +10,16 @@ import UIKit
 
 protocol PokemonDetailInteractorProtocol: AnyObject {
    
-    var selectedPokemon: Pokemon? { get set }
-    var imageData: Data? { get }
+//    var selectedPokemon: Pokemon? { get set }
     var networkService: NetworkServiceProtocol { get }
     var pokemonDetail: PokemonDetail? { get }
-
-    var didChangePokemon: ((PokemonDetail, [String])->())? { get set }
     
-    func fetchPokemonDetailInfo()
+    func fetchPokemonDetailInfo(pokemon: Pokemon)
     func fetchPokemonImage()
 }
 
 protocol PokemonDetailInteractorProtocolOutput: AnyObject {
-    func pokemonDetailDidFetched(_ data: [PokemonDetail])
+    func pokemonDetailDidFetched(_ pokemonDetails: PokemonDetail, imageData: Data)
 }
 
 
@@ -30,16 +27,13 @@ final class PokemonDetailInteractor: PokemonDetailInteractorProtocol {
     
     // MARK: - Properties
     weak var output: PokemonDetailInteractorProtocolOutput?
-    
-    var didChangePokemon: ((PokemonDetail, [String])->())?
-    
     weak var presenter: PokemonDetailPresenterProtocol?
     
-    var selectedPokemon: Pokemon? {
-        didSet {
-            fetchPokemonDetailInfo()
-        }
-    }
+//    var selectedPokemon: Pokemon? {
+//        didSet {
+//            fetchPokemonDetailInfo()
+//        }
+//    }
     
     var pokemonDetail: PokemonDetail?
     var imageData: Data?
@@ -50,12 +44,12 @@ final class PokemonDetailInteractor: PokemonDetailInteractorProtocol {
     }
 
     // MARK: - Methods
-    func fetchPokemonDetailInfo() {
-        guard let selectedPokemon else { return }
-        networkService.getData(urlStr: selectedPokemon.url, expecting: PokemonDetail.self) { [weak self] result in
+    func fetchPokemonDetailInfo(pokemon: Pokemon) {
+        networkService.getData(urlStr: pokemon.url, expecting: PokemonDetail.self) { [weak self] result in
             switch result {
             case .success(let pokemonDetail):
                 self?.pokemonDetail = pokemonDetail
+                self?.fetchPokemonImage()
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -63,11 +57,11 @@ final class PokemonDetailInteractor: PokemonDetailInteractorProtocol {
     }
     
     func fetchPokemonImage() {
-        guard let pokemon = pokemonDetail else { return }
-        networkService.getData(urlStr: pokemon.sprites.frontDefault, expecting: Data.self) { [weak self] result in
+        guard let pokemonDetail else { return }
+        networkService.getData(urlStr: pokemonDetail.sprites.frontDefault, expecting: Data.self) { [weak self] result in
             switch result {
-            case .success(let data):
-                self?.imageData = data
+            case .success(let imageData):
+                self?.output?.pokemonDetailDidFetched(pokemonDetail, imageData: imageData)
             case .failure(let error):
                 print(error.localizedDescription)
             }

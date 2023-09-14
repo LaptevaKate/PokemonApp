@@ -17,16 +17,15 @@ final class PokemonDetailRouter: PokemonDetailRouterProtocol {
     weak var presenter: PokemonDetailPresenterProtocol?
     
     // MARK: - Methods
-    static func build() -> UIViewController {
+    static func build(with pokemon: Pokemon) -> UIViewController {
         
         let interactor = PokemonDetailInteractor(networkService: NetworkService())
         let router = PokemonDetailRouter()
-        let presenter = PokemonDetailPresenter(interactor: interactor, router: router)
+        let presenter = PokemonDetailPresenter(interactor: interactor, router: router, pokemon: pokemon)
         let viewController = PokemonDetailViewController()
         viewController.presenter = presenter
         presenter.view = viewController
         interactor.output = presenter
-//        interactor.presenter = presenter
         router.presenter = presenter
         
         return viewController

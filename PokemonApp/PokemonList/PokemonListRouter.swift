@@ -8,10 +8,10 @@
 import UIKit
 
 protocol PokemonListRouterProtocol: AnyObject {
-    func moveToDetailsVC()
+    func moveToDetailsVC(with pokemon: Pokemon, on: UIViewController?)
 }
 
-final class PokemonListRouter: UIViewController, PokemonListRouterProtocol {
+final class PokemonListRouter: PokemonListRouterProtocol {
     
     // MARK: - Properties
     weak var presenter: PokemonListPresenterProtocol?
@@ -32,10 +32,9 @@ final class PokemonListRouter: UIViewController, PokemonListRouterProtocol {
         
     }
 
-    func moveToDetailsVC() {
-        
-        let secondVC = PokemonDetailRouter.build()
-        self.navigationController?.pushViewController(secondVC, animated: true)
+    func moveToDetailsVC(with pokemon: Pokemon, on: UIViewController?) {
+        let secondVC = PokemonDetailRouter.build(with: pokemon)
+        on?.navigationController?.pushViewController(secondVC, animated: true)
       
     }
 }

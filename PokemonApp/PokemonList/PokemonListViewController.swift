@@ -48,6 +48,7 @@ private extension PokemonListViewController {
     func setupUI() {
         view.addSubview(tableView)
         tableView.frame = view.bounds
+        navigationItem.title = "Choose Your Pokemon"
     }
 }
 
@@ -71,9 +72,14 @@ extension PokemonListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
-        let secondVC = PokemonDetailRouter.build()
-        self.navigationController?.pushViewController(secondVC, animated: true)
-      
+        guard let pokemon = pokemons?[indexPath.row] else { return }
+        presenter?.pokemonDidSelected(pokemon, on: self)
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Available Pokemons"
+        }
+        return nil
     }
 }

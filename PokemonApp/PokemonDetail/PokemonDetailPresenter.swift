@@ -17,28 +17,24 @@ final class PokemonDetailPresenter: PokemonDetailPresenterProtocol {
     weak var view: PokemonDetailViewProtocol?
     var router: PokemonDetailRouterProtocol
     var interactor: PokemonDetailInteractorProtocol
+    private let selectedPokemon: Pokemon
     
-    init(interactor: PokemonDetailInteractorProtocol, router: PokemonDetailRouterProtocol) {
+    init(interactor: PokemonDetailInteractorProtocol, router: PokemonDetailRouterProtocol, pokemon: Pokemon) {
         self.interactor = interactor
         self.router = router
+        self.selectedPokemon = pokemon
     }
     
     // MARK: - Methods
     func pokemonViewDidLoaded() {
-        interactor.fetchPokemonDetailInfo()       
+        interactor.fetchPokemonDetailInfo(pokemon: selectedPokemon)
     }
 }
 
 // MARK: - extension
 extension PokemonDetailPresenter: PokemonDetailInteractorProtocolOutput {
-  
-    func pokemonDetailDidFetched(_ data: [PokemonDetail]) {
-        
-        interactor.didChangePokemon = { [weak self] pokemon, names in
-            DispatchQueue.main.async {
-                guard let data = self?.interactor.imageData else { return }
-                self?.view?.setUpPokemonInfo(with: pokemon, data: data, names: names)
-            }
-        }
+    
+    func pokemonDetailDidFetched(_ pokemonDetails: PokemonDetail, imageData: Data) {
+        view?.setUpPokemonInfo(with: pokemonDetails, data: imageData)
     }
 }

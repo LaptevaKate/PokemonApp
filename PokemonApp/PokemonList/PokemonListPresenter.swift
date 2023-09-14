@@ -9,6 +9,7 @@ import UIKit
 
 protocol PokemonListPresenterProtocol: AnyObject {
     func viewDidLoaded()
+    func pokemonDidSelected(_ pokemon: Pokemon, on view: UIViewController)
 }
 
 final class PokemonListPresenter: PokemonListPresenterProtocol {
@@ -26,6 +27,10 @@ final class PokemonListPresenter: PokemonListPresenterProtocol {
     // MARK: - Methods
     func viewDidLoaded() {
         interactor.fetchPokemons()
+    }
+    
+    func pokemonDidSelected(_ pokemon: Pokemon, on view: UIViewController) {
+        router.moveToDetailsVC(with: pokemon, on: view)
     }
 }
 
