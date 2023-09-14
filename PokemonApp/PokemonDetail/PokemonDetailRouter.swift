@@ -25,8 +25,8 @@ final class PokemonDetailRouter: PokemonDetailRouterProtocol {
         let viewController = PokemonDetailViewController()
         viewController.presenter = presenter
         presenter.view = viewController
-//        interactor.output = presenter
-        interactor.presenter = presenter
+        interactor.output = presenter
+//        interactor.presenter = presenter
         router.presenter = presenter
         
         return viewController
@@ -34,6 +34,7 @@ final class PokemonDetailRouter: PokemonDetailRouterProtocol {
     }
     
     func moveBackToMainVC() {
-//
+        
+        
     }
 }

@@ -25,13 +25,20 @@ final class PokemonDetailPresenter: PokemonDetailPresenterProtocol {
     
     // MARK: - Methods
     func pokemonViewDidLoaded() {
-        interactor.fetchPokemonDetailInfo()
+        interactor.fetchPokemonDetailInfo()       
     }
 }
 
 // MARK: - extension
-//extension PokemonDetailPresenter: PokemonDetailInteractorProtocolOutput{
-//    func pokemonDetailDidFetched(_ data: [PokemonDetail]) {
-//        
-//    }
-//}
+extension PokemonDetailPresenter: PokemonDetailInteractorProtocolOutput {
+  
+    func pokemonDetailDidFetched(_ data: [PokemonDetail]) {
+        
+        interactor.didChangePokemon = { [weak self] pokemon, names in
+            DispatchQueue.main.async {
+                guard let data = self?.interactor.imageData else { return }
+                self?.view?.setUpPokemonInfo(with: pokemon, data: data, names: names)
+            }
+        }
+    }
+}

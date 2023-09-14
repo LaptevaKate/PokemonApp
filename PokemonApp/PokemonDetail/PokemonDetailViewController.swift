@@ -34,17 +34,19 @@ final class PokemonDetailViewController: UIViewController, PokemonDetailViewProt
     
     private var stackView = UIStackView()
     
+   
+    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setupUI()
         presenter?.pokemonViewDidLoaded()
-
+        
     }
  
     // MARK: - Methods
-    
+
     func setUpPokemonInfo(with pokemon: PokemonDetail, data: Data, names: [String]) {
         
         DispatchQueue.main.async {
@@ -55,9 +57,11 @@ final class PokemonDetailViewController: UIViewController, PokemonDetailViewProt
             self.pokemonHeightLabel.text = pokemon.name.capitalized
         }
     }
-    
+}
+// MARK: - extension -  UI
+private extension PokemonDetailViewController {
     func setupUI() {
-        
+      
         stackView = UIStackView(arrangedSubviews: [pokemonNameLabel, pokemonImageView, pokemonTypeLabel,pokemonWeightLabel, pokemonHeightLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical

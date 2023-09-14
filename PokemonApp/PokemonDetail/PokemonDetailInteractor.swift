@@ -14,27 +14,25 @@ protocol PokemonDetailInteractorProtocol: AnyObject {
     var imageData: Data? { get }
     var networkService: NetworkServiceProtocol { get }
     var pokemonDetail: PokemonDetail? { get }
-    
-//    var didChangePokemon: ((PokemonDetail, [String])->())? { get set }
-//    var didRecieveError: ((Error)->())? { get set }
+
+    var didChangePokemon: ((PokemonDetail, [String])->())? { get set }
     
     func fetchPokemonDetailInfo()
     func fetchPokemonImage()
 }
 
-//protocol PokemonDetailInteractorProtocolOutput: AnyObject {
-//    func pokemonDetailDidFetched(_ data: [PokemonDetail])
-//}
+protocol PokemonDetailInteractorProtocolOutput: AnyObject {
+    func pokemonDetailDidFetched(_ data: [PokemonDetail])
+}
 
 
 final class PokemonDetailInteractor: PokemonDetailInteractorProtocol {
     
     // MARK: - Properties
-//    weak var output: PokemonDetailInteractorProtocolOutput?
+    weak var output: PokemonDetailInteractorProtocolOutput?
     
-//    var didChangePokemon: ((PokemonDetail, [String])->())?
-//    var didRecieveError: ((Error)->())?
-
+    var didChangePokemon: ((PokemonDetail, [String])->())?
+    
     weak var presenter: PokemonDetailPresenterProtocol?
     
     var selectedPokemon: Pokemon? {

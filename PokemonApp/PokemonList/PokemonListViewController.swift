@@ -32,6 +32,7 @@ final class PokemonListViewController: UIViewController,  PokemonListViewProtoco
         super.viewDidLoad()
         setupUI()
         presenter?.viewDidLoaded()
+     
     }
     
     // MARK: - Methods
@@ -71,10 +72,8 @@ extension PokemonListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        guard let pokemons else { return }
-        let pokemon = pokemons[indexPath.row]
-        
-//        let viewController = UINavigationBar
-        
+        let secondVC = PokemonDetailRouter.build()
+        self.navigationController?.pushViewController(secondVC, animated: true)
+      
     }
 }

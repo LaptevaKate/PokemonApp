@@ -16,7 +16,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = PokemonListRouter.build()
+        
+        let vc = PokemonListRouter.build()
+        let navigation = UINavigationController(rootViewController: vc)
+        window?.rootViewController = navigation
+
+//        window?.rootViewController = PokemonListRouter.build()
         window?.makeKeyAndVisible()
     }
 

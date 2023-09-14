@@ -11,7 +11,7 @@ protocol PokemonListRouterProtocol: AnyObject {
     func moveToDetailsVC()
 }
 
-final class PokemonListRouter: PokemonListRouterProtocol {
+final class PokemonListRouter: UIViewController, PokemonListRouterProtocol {
     
     // MARK: - Properties
     weak var presenter: PokemonListPresenterProtocol?
@@ -31,11 +31,11 @@ final class PokemonListRouter: PokemonListRouterProtocol {
         return viewController
         
     }
-    
+
     func moveToDetailsVC() {
         
-    let viewController = UINavigationController()
-        
-        
+        let secondVC = PokemonDetailRouter.build()
+        self.navigationController?.pushViewController(secondVC, animated: true)
+      
     }
 }
