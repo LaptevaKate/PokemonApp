@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol PokemonDetailViewProtocol: AnyObject {
     
@@ -37,8 +38,11 @@ final class PokemonDetailViewController: UIViewController, PokemonDetailViewProt
     private let pokemonWeightLabel = UILabel()
     private let pokemonHeightLabel = UILabel()
     
+    
     // MARK: - Properties
     var presenter: PokemonDetailPresenterProtocol?
+
+
     
     // MARK: - LifeCycle
     override func viewDidLoad() {
@@ -50,6 +54,7 @@ final class PokemonDetailViewController: UIViewController, PokemonDetailViewProt
     
     // MARK: - Methods
     
+    
     func setUpPokemonInfo(with pokemon: PokemonDetail, data: Data) {
         
         DispatchQueue.main.async {
@@ -60,6 +65,7 @@ final class PokemonDetailViewController: UIViewController, PokemonDetailViewProt
             self.pokemonHeightLabel.text = pokemon.name.capitalized
         }
     }
+    
 }
 // MARK: - extension -  UI
 private extension PokemonDetailViewController {
@@ -72,6 +78,5 @@ private extension PokemonDetailViewController {
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
-        
     }
 }

@@ -11,7 +11,7 @@ protocol PokemonListViewProtocol: AnyObject {
     
     var presenter: PokemonListPresenterProtocol? { get set }
     
-    func configTableView(with data: [Pokemon])
+    func configTableView()
 }
 
 final class PokemonListViewController: UIViewController,  PokemonListViewProtocol {
@@ -31,16 +31,15 @@ final class PokemonListViewController: UIViewController,  PokemonListViewProtoco
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        pokemons = Array(RealmManager.get(fromEntity: RealmPokemon.self).map{$0.convertToPokemon()})
         presenter?.viewDidLoaded()
      
     }
     
     // MARK: - Methods
-    func configTableView(with data: [Pokemon]) {
-        pokemons = data
+    func configTableView() {
         tableView.reloadData()
     }
-    
 }
 
 // MARK: - extension -  UI

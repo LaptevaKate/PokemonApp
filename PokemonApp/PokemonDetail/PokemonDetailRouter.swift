@@ -34,6 +34,5 @@ final class PokemonDetailRouter: PokemonDetailRouterProtocol {
     
     func moveBackToMainVC() {
         
-        
     }
 }

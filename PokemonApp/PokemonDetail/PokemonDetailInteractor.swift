@@ -6,16 +6,17 @@
 //
 
 import UIKit
+import RealmSwift
 
 
 protocol PokemonDetailInteractorProtocol: AnyObject {
    
-//    var selectedPokemon: Pokemon? { get set }
     var networkService: NetworkServiceProtocol { get }
     var pokemonDetail: PokemonDetail? { get }
     
     func fetchPokemonDetailInfo(pokemon: Pokemon)
     func fetchPokemonImage()
+
 }
 
 protocol PokemonDetailInteractorProtocolOutput: AnyObject {
@@ -28,13 +29,7 @@ final class PokemonDetailInteractor: PokemonDetailInteractorProtocol {
     // MARK: - Properties
     weak var output: PokemonDetailInteractorProtocolOutput?
     weak var presenter: PokemonDetailPresenterProtocol?
-    
-//    var selectedPokemon: Pokemon? {
-//        didSet {
-//            fetchPokemonDetailInfo()
-//        }
-//    }
-    
+
     var pokemonDetail: PokemonDetail?
     var imageData: Data?
     let networkService: NetworkServiceProtocol
@@ -67,4 +62,5 @@ final class PokemonDetailInteractor: PokemonDetailInteractorProtocol {
             }
         }
     }
+
 }

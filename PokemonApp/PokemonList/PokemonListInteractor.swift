@@ -16,11 +16,11 @@ protocol PokemonListInteractorProtocolInput: AnyObject {
     
     func fetchPokemons()
     func fetchPokemonBy(id: String)
-    func fetchNextPokemonsUrl(with url: String)
+//    func fetchNextPokemonsUrl(with url: String)
 }
 
 protocol PokemonListInteractorProtocolOutput: AnyObject {
-    func pokemonsDidFetched(_ data: [Pokemon])
+    func pokemonsDidFetched()
 }
 
 final class PokemonListInteractor: PokemonListInteractorProtocolInput {
@@ -39,10 +39,11 @@ final class PokemonListInteractor: PokemonListInteractorProtocolInput {
     
     // MARK: - Methods
     func fetchPokemons() {
-        networkService.getData(urlStr: baseUrl, expecting: Response.self) { [weak self] result in
+        networkService.getData(urlStr: baseUrl, expecting: PokemonData.self) { [weak self] result in
             switch result {
-            case .success(let response):
-                self?.output?.pokemonsDidFetched(response.results)
+            case .success(let pokemonData):
+                RealmManager.add(pokemonData.results.map{$0.managedObject()})
+                self?.output?.pokemonsDidFetched()
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -51,24 +52,24 @@ final class PokemonListInteractor: PokemonListInteractorProtocolInput {
     
     func fetchPokemonBy(id: String) {
         let url = baseUrl + "/\(id)"
-        networkService.getData(urlStr: url, expecting: Response.self) { [weak self] result in
+        networkService.getData(urlStr: url, expecting: PokemonData.self) { [weak self] result in
             switch result {
-            case .success(let response):
-                print(response)
+            case .success(let pokemonData):
+                print(pokemonData)
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
     }
     
-    func fetchNextPokemonsUrl(with url: String) {
-        networkService.getData(urlStr: url, expecting: Response.self) { [weak self] result in
-            switch result {
-            case .success(let response):
-                self?.nextPokemonsUrl = response.next
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
+//    func fetchNextPokemonsUrl(with url: String) {
+//        networkService.getData(urlStr: url, expecting: Response.self) { [weak self] result in
+//            switch result {
+//            case .success(let response):
+//                self?.nextPokemonsUrl = response.next
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
+//    }
 }

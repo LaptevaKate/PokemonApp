@@ -29,6 +29,7 @@ final class PokemonDetailPresenter: PokemonDetailPresenterProtocol {
     func pokemonViewDidLoaded() {
         interactor.fetchPokemonDetailInfo(pokemon: selectedPokemon)
     }
+
 }
 
 // MARK: - extension

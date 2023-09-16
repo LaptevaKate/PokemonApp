@@ -36,7 +36,7 @@ final class PokemonListPresenter: PokemonListPresenterProtocol {
 
 // MARK: - extension
 extension PokemonListPresenter: PokemonListInteractorProtocolOutput{
-    func pokemonsDidFetched(_ data: [Pokemon]) {
-        view?.configTableView(with: data)
+    func pokemonsDidFetched() {
+        view?.configTableView()
     }
 }
