@@ -8,40 +8,46 @@
 import Foundation
 import RealmSwift
 
-struct PokemonData: Codable {
-    var results: [Pokemon]
-}
-
-struct Pokemon: Codable {
-    let name: String
-    let url: String
-}
-
-extension Pokemon: Persistable {
-    init(managedObject: RealmPokemon) {
-        name = managedObject.name
-        url = managedObject.url
+class PokemonData: Object, Decodable {
+    @Persisted(primaryKey: true) var _id: String
+    @Persisted var results: RealmSwift.List<Pokemon>
+    
+    enum CodingKeys: String, CodingKey {
+        case results
     }
     
-    func managedObject() -> RealmPokemon {
-        let pokemon = RealmPokemon()
-        
-        pokemon.name = name
-        pokemon.url = url
-        
-        return pokemon
+    convenience required init(from decoder: Decoder) throws {
+        self.init()
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        //_id = UUID().uuidString
+        let resultsList = try container.decode([Pokemon].self, forKey: .results)
+        results.append(objectsIn: resultsList)
     }
 }
 
-final class RealmPokemon: Object {
-    @Persisted(primaryKey: true) var _id: ObjectId
-    @Persisted var name: String = ""
-    @Persisted var url: String = ""
+class Pokemon: Object, Decodable {
+    @Persisted(primaryKey: true) var _id: String
+    @Persisted var name: String
+    @Persisted var urlString: String
     
-}
-
-extension RealmPokemon {
-    func convertToPokemon() -> Pokemon {
-        return Pokemon(name: name, url: url)
+    var url: URL? {
+        return URL(string: urlString)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+        case urlString = "url"
+    }
+    
+    convenience required init(from decoder: Decoder) throws {
+        self.init()
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        name = try container.decode(String.self, forKey: .name)
+        urlString = try container.decode(String.self, forKey: .urlString)
+        if let url {
+            _id = url.pathComponents.last ?? "0"
+        } else {
+            _id = "0"
+        }
     }
 }

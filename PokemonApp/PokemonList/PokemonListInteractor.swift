@@ -9,18 +9,17 @@ import Foundation
 import UIKit
 
 protocol PokemonListInteractorProtocolInput: AnyObject {
-
+    
     var nextPokemonsUrl: String? { get }
     var baseUrl: String { get }
     var networkService: NetworkServiceProtocol { get }
     
     func fetchPokemons()
-    func fetchPokemonBy(id: String)
-//    func fetchNextPokemonsUrl(with url: String)
 }
 
 protocol PokemonListInteractorProtocolOutput: AnyObject {
     func pokemonsDidFetched()
+    func pokemonFetchDidFinishWithError(_ error: Error)
 }
 
 final class PokemonListInteractor: PokemonListInteractorProtocolInput {
@@ -42,34 +41,11 @@ final class PokemonListInteractor: PokemonListInteractorProtocolInput {
         networkService.getData(urlStr: baseUrl, expecting: PokemonData.self) { [weak self] result in
             switch result {
             case .success(let pokemonData):
-                RealmManager.add(pokemonData.results.map{$0.managedObject()})
+                RealmManager.manager.add(pokemonData)
                 self?.output?.pokemonsDidFetched()
             case .failure(let error):
-                print(error.localizedDescription)
+                self?.output?.pokemonFetchDidFinishWithError(error)
             }
         }
     }
-    
-    func fetchPokemonBy(id: String) {
-        let url = baseUrl + "/\(id)"
-        networkService.getData(urlStr: url, expecting: PokemonData.self) { [weak self] result in
-            switch result {
-            case .success(let pokemonData):
-                print(pokemonData)
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
-    
-//    func fetchNextPokemonsUrl(with url: String) {
-//        networkService.getData(urlStr: url, expecting: Response.self) { [weak self] result in
-//            switch result {
-//            case .success(let response):
-//                self?.nextPokemonsUrl = response.next
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
-//    }
 }

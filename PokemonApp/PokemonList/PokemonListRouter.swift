@@ -35,6 +35,5 @@ final class PokemonListRouter: PokemonListRouterProtocol {
     func moveToDetailsVC(with pokemon: Pokemon, on: UIViewController?) {
         let secondVC = PokemonDetailRouter.build(with: pokemon)
         on?.navigationController?.pushViewController(secondVC, animated: true)
-      
     }
 }

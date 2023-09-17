@@ -21,6 +21,7 @@ protocol PokemonDetailInteractorProtocol: AnyObject {
 
 protocol PokemonDetailInteractorProtocolOutput: AnyObject {
     func pokemonDetailDidFetched(_ pokemonDetails: PokemonDetail, imageData: Data)
+    func pokemonDetailsFetchDidFinishWithError(_ error: Error)
 }
 
 
@@ -40,20 +41,20 @@ final class PokemonDetailInteractor: PokemonDetailInteractorProtocol {
 
     // MARK: - Methods
     func fetchPokemonDetailInfo(pokemon: Pokemon) {
-        networkService.getData(urlStr: pokemon.url, expecting: PokemonDetail.self) { [weak self] result in
+        networkService.getData(urlStr: pokemon.urlString, expecting: PokemonDetail.self) { [weak self] result in
             switch result {
             case .success(let pokemonDetail):
                 self?.pokemonDetail = pokemonDetail
                 self?.fetchPokemonImage()
             case .failure(let error):
-                print(error.localizedDescription)
+                self?.output?.pokemonDetailsFetchDidFinishWithError(error)
             }
         }
     }
     
     func fetchPokemonImage() {
         guard let pokemonDetail else { return }
-        networkService.getData(urlStr: pokemonDetail.sprites.frontDefault, expecting: Data.self) { [weak self] result in
+        networkService.getData(urlStr: pokemonDetail.sprites?.frontDefault ?? "", expecting: Data.self) { [weak self] result in
             switch result {
             case .success(let imageData):
                 self?.output?.pokemonDetailDidFetched(pokemonDetail, imageData: imageData)
@@ -62,5 +63,4 @@ final class PokemonDetailInteractor: PokemonDetailInteractorProtocol {
             }
         }
     }
-
 }

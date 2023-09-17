@@ -7,9 +7,7 @@
 
 import UIKit
 
-protocol PokemonDetailRouterProtocol: AnyObject {
-    func moveBackToMainVC()
-}
+protocol PokemonDetailRouterProtocol: AnyObject {}
 
 
 final class PokemonDetailRouter: PokemonDetailRouterProtocol {
@@ -29,10 +27,6 @@ final class PokemonDetailRouter: PokemonDetailRouterProtocol {
         router.presenter = presenter
         
         return viewController
-        
-    }
-    
-    func moveBackToMainVC() {
         
     }
 }

@@ -1,13 +1,13 @@
 //
-//  PokemonAppUITestsLaunchTests.swift
-//  PokemonAppUITests
+//  PokemonAppUITests1LaunchTests.swift
+//  PokemonAppUITests1
 //
-//  Created by Екатерина Лаптева on 12.09.23.
+//  Created by Екатерина Лаптева on 17.09.23.
 //
 
 import XCTest
 
-final class PokemonAppUITestsLaunchTests: XCTestCase {
+final class PokemonAppUITests1LaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

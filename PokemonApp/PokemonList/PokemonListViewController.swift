@@ -12,6 +12,7 @@ protocol PokemonListViewProtocol: AnyObject {
     var presenter: PokemonListPresenterProtocol? { get set }
     
     func configTableView()
+    func showError(_ error: Error)
 }
 
 final class PokemonListViewController: UIViewController,  PokemonListViewProtocol {
@@ -25,20 +26,24 @@ final class PokemonListViewController: UIViewController,  PokemonListViewProtoco
     }()
     
     var presenter: PokemonListPresenterProtocol?
-    private var pokemons: [Pokemon]?
- 
+    private var pokemons: [Pokemon]? {
+        return Array(RealmManager.manager.objects(Pokemon.self))
+    }
+    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        pokemons = Array(RealmManager.get(fromEntity: RealmPokemon.self).map{$0.convertToPokemon()})
         presenter?.viewDidLoaded()
-     
     }
     
     // MARK: - Methods
     func configTableView() {
         tableView.reloadData()
+    }
+    
+    func showError(_ error: Error) {
+        AlertPresenter.showAlert(message: error.localizedDescription, on: self)
     }
 }
 

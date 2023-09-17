@@ -39,4 +39,8 @@ extension PokemonListPresenter: PokemonListInteractorProtocolOutput{
     func pokemonsDidFetched() {
         view?.configTableView()
     }
+    
+    func pokemonFetchDidFinishWithError(_ error: Error) {
+        view?.showError(error)
+    }
 }

@@ -13,6 +13,7 @@ protocol PokemonDetailViewProtocol: AnyObject {
     var presenter: PokemonDetailPresenterProtocol? { get set }
     
     func setUpPokemonInfo(with pokemon: PokemonDetail, data: Data)
+    func showError(_ error: Error)
 }
 
 
@@ -24,6 +25,7 @@ final class PokemonDetailViewController: UIViewController, PokemonDetailViewProt
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
+    
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [pokemonNameLabel, pokemonImageView, pokemonTypeLabel,pokemonWeightLabel, pokemonHeightLabel])
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -33,6 +35,7 @@ final class PokemonDetailViewController: UIViewController, PokemonDetailViewProt
         stackView.spacing = UIStackView.spacingUseSystem
         return stackView
     }()
+    
     private let pokemonNameLabel = UILabel()
     private let pokemonTypeLabel = UILabel()
     private let pokemonWeightLabel = UILabel()
@@ -59,13 +62,16 @@ final class PokemonDetailViewController: UIViewController, PokemonDetailViewProt
         
         DispatchQueue.main.async {
             self.pokemonImageView.image = UIImage(data: data)
-            self.pokemonNameLabel.text = "Types: " + pokemon.types.map{$0.type.name}.joined(separator: ", ")
+            self.pokemonNameLabel.text = "Types: " + pokemon.types.map{$0.type?.name ?? ""}.joined(separator: ", ")
             self.pokemonTypeLabel.text = "Height: \(pokemon.height * 10) cm"
             self.pokemonWeightLabel.text = "Weight: \(pokemon.weight / 10) kg"
             self.pokemonHeightLabel.text = pokemon.name.capitalized
         }
     }
     
+    func showError(_ error: Error) {
+        AlertPresenter.showAlert(message: error.localizedDescription, on: self)
+    }
 }
 // MARK: - extension -  UI
 private extension PokemonDetailViewController {

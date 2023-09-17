@@ -38,4 +38,8 @@ extension PokemonDetailPresenter: PokemonDetailInteractorProtocolOutput {
     func pokemonDetailDidFetched(_ pokemonDetails: PokemonDetail, imageData: Data) {
         view?.setUpPokemonInfo(with: pokemonDetails, data: imageData)
     }
+    
+    func pokemonDetailsFetchDidFinishWithError(_ error: Error) {
+        view?.showError(error)
+    }
 }
