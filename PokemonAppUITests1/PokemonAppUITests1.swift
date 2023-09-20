@@ -1,13 +1,13 @@
 //
-//  PokemonAppUITests.swift
-//  PokemonAppUITests
+//  PokemonAppUITests1.swift
+//  PokemonAppUITests1
 //
-//  Created by Екатерина Лаптева on 12.09.23.
+//  Created by Екатерина Лаптева on 17.09.23.
 //
 
 import XCTest
 
-final class PokemonAppUITests: XCTestCase {
+final class PokemonAppUITests1: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
