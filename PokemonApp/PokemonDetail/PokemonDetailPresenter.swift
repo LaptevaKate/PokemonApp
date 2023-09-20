@@ -8,7 +8,7 @@
 import UIKit
 
 protocol PokemonDetailPresenterProtocol: AnyObject {
-    func pokemonViewDidLoaded()
+    func pokemonViewDidLoad()
 }
 
 final class PokemonDetailPresenter: PokemonDetailPresenterProtocol {
@@ -26,7 +26,7 @@ final class PokemonDetailPresenter: PokemonDetailPresenterProtocol {
     }
     
     // MARK: - Methods
-    func pokemonViewDidLoaded() {
+    func pokemonViewDidLoad() {
         interactor.fetchPokemonDetailInfo(pokemon: selectedPokemon)
     }
 
@@ -35,7 +35,7 @@ final class PokemonDetailPresenter: PokemonDetailPresenterProtocol {
 // MARK: - extension
 extension PokemonDetailPresenter: PokemonDetailInteractorProtocolOutput {
     
-    func pokemonDetailDidFetched(_ pokemonDetails: PokemonDetail, imageData: Data) {
+    func pokemonDetailDidFetch(_ pokemonDetails: PokemonDetail, imageData: Data) {
         view?.setUpPokemonInfo(with: pokemonDetails, data: imageData)
     }
     

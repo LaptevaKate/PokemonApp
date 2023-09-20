@@ -8,12 +8,12 @@
 import Foundation
 
 protocol NetworkServiceProtocol {
-    func getData<T:Decodable>(urlStr: String, expecting: T.Type, completion: @escaping (Result<T, Error>) -> Void)
+    func getData<T:Decodable>(urlString: String, expecting: T.Type, completion: @escaping (Result<T, Error>) -> Void)
 }
 
 final class NetworkService: NetworkServiceProtocol {
-    func getData<T:Decodable>(urlStr: String, expecting: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
-        guard let url = URL(string: urlStr) else { return }
+    func getData<T:Decodable>(urlString: String, expecting: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
+        guard let url = URL(string: urlString) else { return }
         
         URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {

@@ -21,7 +21,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigation = UINavigationController(rootViewController: vc)
         window?.rootViewController = navigation
 
-//        window?.rootViewController = PokemonListRouter.build()
         window?.makeKeyAndVisible()
     }
 

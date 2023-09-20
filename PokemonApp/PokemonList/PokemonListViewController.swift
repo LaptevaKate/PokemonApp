@@ -34,7 +34,7 @@ final class PokemonListViewController: UIViewController,  PokemonListViewProtoco
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        presenter?.viewDidLoaded()
+        presenter?.pokemonViewLoaded()
     }
     
     // MARK: - Methods
@@ -77,7 +77,7 @@ extension PokemonListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let pokemon = pokemons?[indexPath.row] else { return }
-        presenter?.pokemonDidSelected(pokemon, on: self)
+        presenter?.pokemonSelected(pokemon, on: self)
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

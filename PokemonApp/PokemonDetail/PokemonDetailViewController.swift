@@ -49,7 +49,7 @@ final class PokemonDetailViewController: UIViewController, PokemonDetailViewProt
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        presenter?.pokemonViewDidLoaded()
+        presenter?.pokemonViewDidLoad()
         
     }
     

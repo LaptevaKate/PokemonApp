@@ -8,8 +8,8 @@
 import UIKit
 
 protocol PokemonListPresenterProtocol: AnyObject {
-    func viewDidLoaded()
-    func pokemonDidSelected(_ pokemon: Pokemon, on view: UIViewController)
+    func pokemonViewLoaded()
+    func pokemonSelected(_ pokemon: Pokemon, on view: UIViewController)
 }
 
 final class PokemonListPresenter: PokemonListPresenterProtocol {
@@ -25,18 +25,18 @@ final class PokemonListPresenter: PokemonListPresenterProtocol {
     }
     
     // MARK: - Methods
-    func viewDidLoaded() {
+    func pokemonViewLoaded() {
         interactor.fetchPokemons()
     }
     
-    func pokemonDidSelected(_ pokemon: Pokemon, on view: UIViewController) {
+    func pokemonSelected(_ pokemon: Pokemon, on view: UIViewController) {
         router.moveToDetailsVC(with: pokemon, on: view)
     }
 }
 
 // MARK: - extension
 extension PokemonListPresenter: PokemonListInteractorProtocolOutput{
-    func pokemonsDidFetched() {
+    func pokemonsDidFetch() {
         view?.configTableView()
     }
     

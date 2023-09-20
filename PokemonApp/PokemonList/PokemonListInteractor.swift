@@ -10,7 +10,6 @@ import UIKit
 
 protocol PokemonListInteractorProtocolInput: AnyObject {
     
-    var nextPokemonsUrl: String? { get }
     var baseUrl: String { get }
     var networkService: NetworkServiceProtocol { get }
     
@@ -18,7 +17,7 @@ protocol PokemonListInteractorProtocolInput: AnyObject {
 }
 
 protocol PokemonListInteractorProtocolOutput: AnyObject {
-    func pokemonsDidFetched()
+    func pokemonsDidFetch()
     func pokemonFetchDidFinishWithError(_ error: Error)
 }
 
@@ -27,7 +26,6 @@ final class PokemonListInteractor: PokemonListInteractorProtocolInput {
     // MARK: - Properties
     weak var output: PokemonListInteractorProtocolOutput?
     
-    var nextPokemonsUrl: String?
     let baseUrl = "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0"
     
     let networkService: NetworkServiceProtocol
@@ -38,11 +36,11 @@ final class PokemonListInteractor: PokemonListInteractorProtocolInput {
     
     // MARK: - Methods
     func fetchPokemons() {
-        networkService.getData(urlStr: baseUrl, expecting: PokemonData.self) { [weak self] result in
+        networkService.getData(urlString: baseUrl, expecting: PokemonData.self) { [weak self] result in
             switch result {
             case .success(let pokemonData):
                 RealmManager.manager.add(pokemonData)
-                self?.output?.pokemonsDidFetched()
+                self?.output?.pokemonsDidFetch()
             case .failure(let error):
                 self?.output?.pokemonFetchDidFinishWithError(error)
             }
