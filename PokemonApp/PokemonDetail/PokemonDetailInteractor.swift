@@ -10,15 +10,9 @@ import RealmSwift
 
 
 protocol PokemonDetailInteractorProtocol: AnyObject {
-   
-    var networkService: NetworkServiceProtocol { get }
-    var pokemonDetail: PokemonDetail? { get }
-    
     func fetchPokemonDetailInfo(pokemon: Pokemon)
     func fetchPokemonImage()
-
 }
-
 protocol PokemonDetailInteractorProtocolOutput: AnyObject {
     func pokemonDetailDidFetch(_ pokemonDetails: PokemonDetail, imageData: Data)
     func pokemonDetailsFetchDidFinishWithError(_ error: Error)
@@ -26,7 +20,6 @@ protocol PokemonDetailInteractorProtocolOutput: AnyObject {
 
 
 final class PokemonDetailInteractor: PokemonDetailInteractorProtocol {
-    
     // MARK: - Properties
     weak var output: PokemonDetailInteractorProtocolOutput?
     weak var presenter: PokemonDetailPresenterProtocol?
@@ -38,7 +31,6 @@ final class PokemonDetailInteractor: PokemonDetailInteractorProtocol {
     init(networkService: NetworkServiceProtocol) {
         self.networkService = networkService
     }
-
     // MARK: - Methods
     func fetchPokemonDetailInfo(pokemon: Pokemon) {
         networkService.getData(urlString: pokemon.urlString, expecting: PokemonDetail.self) { [weak self] result in

@@ -11,14 +11,11 @@ import RealmSwift
 protocol PokemonDetailViewProtocol: AnyObject {
     
     var presenter: PokemonDetailPresenterProtocol? { get set }
-    
-    func setUpPokemonInfo(with pokemon: PokemonDetail, data: Data)
+    func setupUI(with viewModel: PokemonDetailViewModel)
     func showError(_ error: Error)
 }
 
-
 final class PokemonDetailViewController: UIViewController, PokemonDetailViewProtocol {
-    
     private lazy var pokemonImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.clipsToBounds = true
@@ -41,39 +38,23 @@ final class PokemonDetailViewController: UIViewController, PokemonDetailViewProt
     private let pokemonWeightLabel = UILabel()
     private let pokemonHeightLabel = UILabel()
     
-    
     // MARK: - Properties
     var presenter: PokemonDetailPresenterProtocol?
-
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        initialsetupUI()
         presenter?.pokemonViewDidLoad()
         
     }
-    
     // MARK: - Methods
-    
-    
-    func setUpPokemonInfo(with pokemon: PokemonDetail, data: Data) {
-        
-        DispatchQueue.main.async {
-            self.pokemonImageView.image = UIImage(data: data)
-            self.pokemonNameLabel.text = "Types: " + pokemon.types.map{$0.type?.name ?? ""}.joined(separator: ", ")
-            self.pokemonTypeLabel.text = "Height: \(pokemon.height * 10) cm"
-            self.pokemonWeightLabel.text = "Weight: \(pokemon.weight / 10) kg"
-            self.pokemonHeightLabel.text = pokemon.name.capitalized
-        }
-    }
-    
     func showError(_ error: Error) {
         AlertPresenter.showAlert(message: error.localizedDescription, on: self)
     }
 }
 // MARK: - extension -  UI
-private extension PokemonDetailViewController {
-    func setupUI() {
+extension PokemonDetailViewController {
+    private func initialsetupUI() {
         navigationItem.title = "Pokemon Info"
         view.backgroundColor = .white
         view.addSubview(stackView)
@@ -82,5 +63,14 @@ private extension PokemonDetailViewController {
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
+        
+    }
+    
+    func setupUI(with viewModel: PokemonDetailViewModel) {
+        self.pokemonImageView.image = viewModel.pokemonImage
+        self.pokemonNameLabel.text = viewModel.pokemonName
+        self.pokemonTypeLabel.text = viewModel.pokemonType
+        self.pokemonWeightLabel.text = viewModel.pokemonWeight
+        self.pokemonHeightLabel.text = viewModel.pokemonHeight
     }
 }

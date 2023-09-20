@@ -11,9 +11,7 @@ import RealmSwift
 final class RealmManager {
     static let manager = RealmManager()
     
-    
     private init() {}
-    
     private var realm: Realm {
         return try! Realm()
     }
@@ -31,7 +29,6 @@ final class RealmManager {
             }
         }
     }
-    
     
     func add<T: Object>(_ data: [T], update: Realm.UpdatePolicy = .all) {
         if realm.isInWriteTransaction {

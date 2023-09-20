@@ -15,7 +15,6 @@ class Types: Object, Decodable {
     enum CodingKeys: String, CodingKey {
         case name, url
     }
-    
     convenience required init(from decoder: Decoder) throws {
         self.init()
         let container = try decoder.container(keyedBy: CodingKeys.self)

@@ -11,7 +11,6 @@ import RealmSwift
 class PokemonData: Object, Decodable {
     @Persisted(primaryKey: true) var _id: String
     @Persisted var results: RealmSwift.List<Pokemon>
-    
     enum CodingKeys: String, CodingKey {
         case results
     }
@@ -19,7 +18,6 @@ class PokemonData: Object, Decodable {
     convenience required init(from decoder: Decoder) throws {
         self.init()
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        //_id = UUID().uuidString
         let resultsList = try container.decode([Pokemon].self, forKey: .results)
         results.append(objectsIn: resultsList)
     }
@@ -33,7 +31,6 @@ class Pokemon: Object, Decodable {
     var url: URL? {
         return URL(string: urlString)
     }
-    
     enum CodingKeys: String, CodingKey {
         case name
         case urlString = "url"

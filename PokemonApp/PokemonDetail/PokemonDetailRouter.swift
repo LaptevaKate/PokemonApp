@@ -9,11 +9,9 @@ import UIKit
 
 protocol PokemonDetailRouterProtocol: AnyObject {}
 
-
 final class PokemonDetailRouter: PokemonDetailRouterProtocol {
     // MARK: - Properties
     weak var presenter: PokemonDetailPresenterProtocol?
-    
     // MARK: - Methods
     static func build(with pokemon: Pokemon) -> UIViewController {
         
@@ -27,6 +25,5 @@ final class PokemonDetailRouter: PokemonDetailRouterProtocol {
         router.presenter = presenter
         
         return viewController
-        
     }
 }

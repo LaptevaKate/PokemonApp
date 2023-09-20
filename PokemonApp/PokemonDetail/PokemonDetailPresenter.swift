@@ -9,10 +9,10 @@ import UIKit
 
 protocol PokemonDetailPresenterProtocol: AnyObject {
     func pokemonViewDidLoad()
+    func setUpPokemonInfo(with pokemon: PokemonDetail, data: Data)
 }
 
-final class PokemonDetailPresenter: PokemonDetailPresenterProtocol {
-    
+final class PokemonDetailPresenter:  PokemonDetailPresenterProtocol {
     // MARK: - Properties
     weak var view: PokemonDetailViewProtocol?
     var router: PokemonDetailRouterProtocol
@@ -29,17 +29,29 @@ final class PokemonDetailPresenter: PokemonDetailPresenterProtocol {
     func pokemonViewDidLoad() {
         interactor.fetchPokemonDetailInfo(pokemon: selectedPokemon)
     }
-
+    
+    func setUpPokemonInfo(with pokemon: PokemonDetail, data: Data) {
+        let viewModel = PokemonDetailViewModel(pokemonImage: UIImage(data: data) ?? UIImage(),
+                                              pokemonName: "Types: " + pokemon.types.map{$0.type?.name ?? ""}.joined(separator: ", "),
+                                              pokemonType: "Height: \(pokemon.height * 10) cm",
+                                              pokemonWeight: "Weight: \(pokemon.weight / 10) kg",
+                                              pokemonHeight: pokemon.name.capitalized)
+        view?.setupUI(with: viewModel)
+    }
 }
 
 // MARK: - extension
 extension PokemonDetailPresenter: PokemonDetailInteractorProtocolOutput {
     
     func pokemonDetailDidFetch(_ pokemonDetails: PokemonDetail, imageData: Data) {
-        view?.setUpPokemonInfo(with: pokemonDetails, data: imageData)
+        setUpPokemonInfo(with: pokemonDetails, data: imageData)
     }
     
     func pokemonDetailsFetchDidFinishWithError(_ error: Error) {
         view?.showError(error)
     }
 }
+
+
+
+

@@ -19,7 +19,6 @@ class PokemonDetail: Object, Decodable {
     enum CodingKeys: String, CodingKey {
             case id, name, height, weight, types, sprites
         }
-    
     convenience required init(from decoder: Decoder) throws {
         self.init()
         let container = try decoder.container(keyedBy: CodingKeys.self)

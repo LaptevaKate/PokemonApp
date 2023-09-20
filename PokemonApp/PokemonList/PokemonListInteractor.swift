@@ -9,31 +9,22 @@ import Foundation
 import UIKit
 
 protocol PokemonListInteractorProtocolInput: AnyObject {
-    
-    var baseUrl: String { get }
-    var networkService: NetworkServiceProtocol { get }
-    
     func fetchPokemons()
 }
-
 protocol PokemonListInteractorProtocolOutput: AnyObject {
     func pokemonsDidFetch()
     func pokemonFetchDidFinishWithError(_ error: Error)
 }
 
 final class PokemonListInteractor: PokemonListInteractorProtocolInput {
-    
     // MARK: - Properties
     weak var output: PokemonListInteractorProtocolOutput?
-    
-    let baseUrl = "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0"
-    
-    let networkService: NetworkServiceProtocol
+    private let baseUrl = BaseURL.authorization.rawValue
+    private let networkService: NetworkServiceProtocol
     
     init(networkService: NetworkServiceProtocol) {
         self.networkService = networkService
     }
-    
     // MARK: - Methods
     func fetchPokemons() {
         networkService.getData(urlString: baseUrl, expecting: PokemonData.self) { [weak self] result in

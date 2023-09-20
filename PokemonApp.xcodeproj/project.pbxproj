@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5E2C78F52ABB79E4005F95AE /* PokemonDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C78F42ABB79E4005F95AE /* PokemonDetailViewModel.swift */; };
+		5E2C78F72ABB83B1005F95AE /* BaseUrlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E2C78F62ABB83B1005F95AE /* BaseUrlModel.swift */; };
 		5E54DF5C2AB07B6E008EC0AC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E54DF5B2AB07B6E008EC0AC /* AppDelegate.swift */; };
 		5E54DF5E2AB07B6E008EC0AC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E54DF5D2AB07B6E008EC0AC /* SceneDelegate.swift */; };
 		5E54DF602AB07B6E008EC0AC /* PokemonListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E54DF5F2AB07B6E008EC0AC /* PokemonListViewController.swift */; };
@@ -44,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5E2C78F42ABB79E4005F95AE /* PokemonDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailViewModel.swift; sourceTree = "<group>"; };
+		5E2C78F62ABB83B1005F95AE /* BaseUrlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseUrlModel.swift; sourceTree = "<group>"; };
 		5E54DF582AB07B6E008EC0AC /* PokemonApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PokemonApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E54DF5B2AB07B6E008EC0AC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5E54DF5D2AB07B6E008EC0AC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -134,6 +138,7 @@
 			isa = PBXGroup;
 			children = (
 				5E58876E2AB094CA0043E193 /* Pokemons.swift */,
+				5E2C78F62ABB83B1005F95AE /* BaseUrlModel.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -155,6 +160,7 @@
 			children = (
 				5E5887A32AB207AD0043E193 /* PokemonDetailViewController.swift */,
 				5E5887A52AB2D94D0043E193 /* PokemonDetailPresenter.swift */,
+				5E2C78F42ABB79E4005F95AE /* PokemonDetailViewModel.swift */,
 				5E5887A72AB2D96B0043E193 /* PokemonDetailInteractor.swift */,
 				5E5887A92AB2D9800043E193 /* PokemonDetailRouter.swift */,
 				5E58878C2AB1B9860043E193 /* Entity */,
@@ -323,6 +329,7 @@
 				5E58877B2AB0E2220043E193 /* PokemonListRouter.swift in Sources */,
 				5EC1A3802AB436C5002A3314 /* RealmManager.swift in Sources */,
 				5E54DF602AB07B6E008EC0AC /* PokemonListViewController.swift in Sources */,
+				5E2C78F72ABB83B1005F95AE /* BaseUrlModel.swift in Sources */,
 				5E58876C2AB092180043E193 /* PokemonDetail.swift in Sources */,
 				5EC1A3A92AB775BA002A3314 /* AlertPresenter.swift in Sources */,
 				5E54DF5C2AB07B6E008EC0AC /* AppDelegate.swift in Sources */,
@@ -333,6 +340,7 @@
 				5E54DF5E2AB07B6E008EC0AC /* SceneDelegate.swift in Sources */,
 				5E58876F2AB094CA0043E193 /* Pokemons.swift in Sources */,
 				5E5887772AB0E1B10043E193 /* PokemonListInteractor.swift in Sources */,
+				5E2C78F52ABB79E4005F95AE /* PokemonDetailViewModel.swift in Sources */,
 				5E5887A82AB2D96B0043E193 /* PokemonDetailInteractor.swift in Sources */,
 				5EC1A3A52AB71491002A3314 /* Types.swift in Sources */,
 				5E5887A22AB1E59B0043E193 /* NetworkService.swift in Sources */,

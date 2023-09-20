@@ -13,7 +13,6 @@ protocol PokemonListPresenterProtocol: AnyObject {
 }
 
 final class PokemonListPresenter: PokemonListPresenterProtocol {
-    
     // MARK: - Properties
     weak var view: PokemonListViewProtocol?
     var router: PokemonListRouterProtocol
@@ -23,7 +22,6 @@ final class PokemonListPresenter: PokemonListPresenterProtocol {
         self.interactor = interactor
         self.router = router
     }
-    
     // MARK: - Methods
     func pokemonViewLoaded() {
         interactor.fetchPokemons()
@@ -33,7 +31,6 @@ final class PokemonListPresenter: PokemonListPresenterProtocol {
         router.moveToDetailsVC(with: pokemon, on: view)
     }
 }
-
 // MARK: - extension
 extension PokemonListPresenter: PokemonListInteractorProtocolOutput{
     func pokemonsDidFetch() {

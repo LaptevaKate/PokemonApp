@@ -16,7 +16,6 @@ class TypeElement: Object, Decodable {
         case slot
         case type
     }
-    
     convenience required init(from decoder: Decoder) throws {
         self.init()
         let container = try decoder.container(keyedBy: CodingKeys.self)
