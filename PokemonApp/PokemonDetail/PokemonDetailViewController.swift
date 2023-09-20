@@ -45,8 +45,6 @@ final class PokemonDetailViewController: UIViewController, PokemonDetailViewProt
     // MARK: - Properties
     var presenter: PokemonDetailPresenterProtocol?
 
-
-    
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
