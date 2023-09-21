@@ -63,7 +63,6 @@ extension PokemonListViewController: UITableViewDataSource {
 }
 // MARK: - extension - UITableViewDelegate
 extension PokemonListViewController: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         guard let pokemon = pokemons?[indexPath.row] else { return }

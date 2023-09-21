@@ -8,14 +8,12 @@
 import Foundation
 import RealmSwift
 
-final class RealmManager {
-    static let manager = RealmManager()
-    
-    private init() {}
-    private var realm: Realm {
-        return try! Realm()
-    }
-    
+protocol RealmManagerProtocol {
+    static var manager: Self { get }
+    var realm: Realm { get }
+}
+
+extension RealmManagerProtocol {
     func objects<T: Object>(_ type: T.Type, predicate: NSPredicate? = nil) -> Results<T> {
         return predicate == nil ? realm.objects(type) : realm.objects(type).filter(predicate!)
     }
@@ -38,5 +36,14 @@ final class RealmManager {
                 realm.add(data, update: update)
             }
         }
+    }
+}
+
+final class RealmManager: RealmManagerProtocol {
+    static let manager = RealmManager()
+    
+    private init() {}
+    internal var realm: Realm {
+        return try! Realm()
     }
 }
